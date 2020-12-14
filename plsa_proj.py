@@ -1,3 +1,10 @@
+#################################
+# Author: Chirag Shetty
+# Course: CS410, Fall 2020
+# Adopted from: MP 3
+# PLSA with backgroun model
+##########################
+
 import numpy as np
 import math
 
@@ -37,7 +44,7 @@ class Corpus(object):
         self.topic_word_prob = None  # P(w | z)
 
         self.background_prob_model = None #P(w/B) =>1D, just word axis
-        self.lambda_b = 0.95
+        self.lambda_b = 0.90
 
         self.topic_prob = None  # P(z=j | d, w) => 3D
         self.bg_prob = None  # P(z=B | d, w) => 2D, no topics axis
@@ -266,8 +273,8 @@ class Corpus(object):
 
 def main():
     documents_path = 'cnn/'
-    N = 18 #no of docs
-    name_set=['elon','bezos']
+    N = 29 #no of docs
+    name_set=['elon','gates']
     corpus = Corpus(documents_path, N, name_set)
     corpus.build_corpus()
     corpus.build_vocabulary()
@@ -280,15 +287,23 @@ def main():
     epsilon = 0.001
     corpus.plsa(number_of_topics, max_iterations, epsilon)
 
-    for topic_no in range(number_of_topics):
-        a = corpus.topic_word_prob[topic_no,:]
-        idx = sorted(range(len(a)), key=lambda i: a[i], reverse=True)[:30]
-        print([corpus.vocabulary[j] for j in idx])
+    top_n = 10  # Dispaly top_n words in each distribution
 
+    ### Background Distribution
     a = corpus.background_prob
-    idx = sorted(range(len(a)), key=lambda i: a[i], reverse=True)[:30]
+    idx = sorted(range(len(a)), key=lambda i: a[i], reverse=True)[:top_n]
+    print("Background Model:")
     print([corpus.vocabulary[j] for j in idx])
-    print([corpus.background_prob[j] for j in idx])
+
+    print('#########################################')
+
+    ### Obtained latent topic distributions
+    for topic_no in range(number_of_topics):
+        print("Topic No: ",topic_no)    # Common distribution across collections
+        a = corpus.topic_word_prob[topic_no,:]
+        idx = sorted(range(len(a)), key=lambda i: a[i], reverse=True)[:top_n]
+        print([corpus.vocabulary[j] for j in idx])
+        print('#########################################')
 
 
 

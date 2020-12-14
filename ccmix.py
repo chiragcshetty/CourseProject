@@ -4,7 +4,7 @@
 # Adopted from: MP 3
 # Reproduction of the paper: A Cross-Collection Mixture Model for Comparative Text Mining
 
-#Procedure:
+# Procedure:
 # 1) Run scrap.py, by setting dir_url to a topic search page on cnn webpage. Set appropritae variables as described on scrap.py
 # 2) Set N number of docs of each kind in the collection
 # 3) name_set=list of names of each collection eg: ['elon','bezos']
@@ -54,7 +54,7 @@ class Corpus(object):
         self.topic_word_prob_C = [] #P(w/k,Ci) => no_topics*no_words*no_collection
 
         self.background_prob_model = None #P(w/B) =>1D, just word axis
-        self.lambda_b = 0.90
+        self.lambda_b = 0.94
 
         self.topic_prob = None  # P(z=j | d, w) => 3D
         self.bg_prob = None  # P(z=B | d, w) => 2D, no topics axis
@@ -64,7 +64,7 @@ class Corpus(object):
         self.vocabulary_size = 0
 
         self.no_collection = len(name_set) # Number of collections
-        self.lambda_c = 0.7
+        self.lambda_c = 0.4
 
     def build_corpus(self):
         """
@@ -326,8 +326,8 @@ class Corpus(object):
 
 def main():
     documents_path = 'cnn/'
-    N = 18 #no of docs
-    name_set=['elon','bezos']
+    N = 29 #no of docs
+    name_set=['elon','gates']
     corpus = Corpus(documents_path, N, name_set)
     corpus.build_corpus()
     corpus.build_vocabulary()

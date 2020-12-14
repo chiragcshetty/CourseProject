@@ -105,9 +105,13 @@ def main():
         #dir_url='https://www.cnn.com/search?size=10&q=jeff%20bezos%20%22amazon%22'
         #name = 'bezos'
 
-        dir_url='https://www.cnn.com/search?size=10&q=elon%20musk%20%22tesla%22'
+        dir_url='https://www.cnn.com/search?size=10&q=elon%20musk'
         name = 'elon' #for file name while storing
-        no_pages = 2  # Number of pages to search. Each page has 10 articles
+
+        dir_url = 'https://www.cnn.com/search?size=10&q=bill%20gates'
+        name = 'gates'
+
+        no_pages = 4  # Number of pages to search. Each page has 10 articles
         scrape_cnn_page(dir_url+'&type=article&sort=newest&from=',driver,name, no_pages)
         
     finally:
